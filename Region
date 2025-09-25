@@ -1,0 +1,18 @@
+package tiendaonline;
+
+public class Region {
+    private int numeroRegion;
+    private String nombreRegion;
+    private String ciudadPrincipal;
+
+    public Region(int numeroRegion, String nombreRegion, String ciudadPrincipal) {
+        this.numeroRegion = numeroRegion;
+        this.nombreRegion = nombreRegion;
+        this.ciudadPrincipal = ciudadPrincipal;
+    }
+
+    @Override
+    public String toString() {
+        return "Region{" + "numeroRegion=" + numeroRegion + ", nombreRegion=" + nombreRegion + ", ciudadPrincipal=" + ciudadPrincipal + '}';
+    }
+}
