@@ -1,0 +1,27 @@
+package tiendaonline;
+
+import java.time.LocalDate;
+
+public class Vendedor {
+    private String nombreVendedor;
+    private String rutVendedor;
+    private LocalDate fechaDeIngreso;
+    private Region region;
+
+    public Vendedor(String nombreVendedor, String rutVendedor, LocalDate fechaDeIngreso, Region region) {
+        this.nombreVendedor = nombreVendedor;
+        this.rutVendedor = rutVendedor;
+        this.fechaDeIngreso = fechaDeIngreso;
+        this.region = region;
+    }
+
+    public String getNombreVendedor() { return nombreVendedor; }
+    public String getRutVendedor() { return rutVendedor; }
+    public LocalDate getFechaDeIngreso() { return fechaDeIngreso; }
+    public Region getRegion() { return region; }
+
+    @Override
+    public String toString() {
+        return "Vendedor{" + "nombre=" + nombreVendedor + ", rut=" + rutVendedor + ", fechaDeIngreso=" + fechaDeIngreso + ", region=" + region + '}';
+    }
+}
