@@ -1,0 +1,132 @@
+package tiendaonline;
+
+import java.util.Scanner;
+import java.time.LocalDate;
+
+public class TiendaOnline {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        Cliente cliente = null;
+        Vendedor vendedor = null;
+        Producto producto = null;
+        Pedido pedido = null;
+        Region region = null;
+
+        int opcion = 0;
+
+        while (opcion != 5) {
+            System.out.println("=== SISTEMA DE COMPRA ===");
+            System.out.println("1. Ingresar Cliente");
+            System.out.println("2. Ingresar Vendedor");
+            System.out.println("3. Ingresar Producto");
+            System.out.println("4. Generar Pedido");
+            System.out.println("5. Salir");
+            System.out.print("Seleccione una opción: ");
+            opcion = Integer.parseInt(sc.nextLine());
+
+            switch (opcion) {
+                case 1:
+                    System.out.println("--- INGRESO DE CLIENTE ---");
+                    System.out.print("Ingrese nombre: ");
+                    String nombreC = sc.nextLine();
+                    System.out.print("Ingrese RUT: ");
+                    String rutC = sc.nextLine();
+                    System.out.print("Ingrese edad: ");
+                    int edad = Integer.parseInt(sc.nextLine());
+                    System.out.print("Ingrese fecha de nacimiento (AAAA-MM-DD): ");
+                    LocalDate fechaNac = LocalDate.parse(sc.nextLine());
+
+                    if (nombreC.isEmpty() || edad < 18 || edad >= 100) {
+                        System.out.println("Datos de cliente inválidos.");
+                    } else {
+                        cliente = new Cliente(nombreC, rutC, edad, fechaNac);
+                        System.out.println("Cliente registrado con éxito.");
+                    }
+                    break;
+
+                case 2:
+                    System.out.println("--- INGRESO DE VENDEDOR ---");
+                    System.out.print("Ingrese RUT: ");
+                    String rutV = sc.nextLine();
+                    System.out.print("Ingrese nombre: ");
+                    String nombreV = sc.nextLine();
+                    System.out.print("Ingrese fecha de ingreso (AAAA-MM-DD): ");
+                    LocalDate fechaIng = LocalDate.parse(sc.nextLine());
+
+                    if (fechaIng.isAfter(LocalDate.now()) || nombreV.isEmpty()) {
+                        System.out.println("Datos de vendedor inválidos.");
+                        break;
+                    }
+
+                    System.out.print("Ingrese número región: ");
+                    int nroR = Integer.parseInt(sc.nextLine());
+                    System.out.print("Ingrese nombre región: ");
+                    String nomR = sc.nextLine();
+                    System.out.print("Ingrese ciudad principal: ");
+                    String ciudad = sc.nextLine();
+
+                    region = new Region(nroR, nomR, ciudad);
+                    vendedor = new Vendedor(nombreV, rutV, fechaIng, region);
+                    System.out.println("Vendedor registrado con éxito.");
+                    break;
+
+                case 3:
+                    System.out.println("--- INGRESO DE PRODUCTO ---");
+                    System.out.print("Ingrese código: ");
+                    int codP = Integer.parseInt(sc.nextLine());
+                    System.out.print("Ingrese nombre producto: ");
+                    String nomP = sc.nextLine();
+                    System.out.print("Ingrese tipo (Crema/Perfume): ");
+                    String tipoP = sc.nextLine();
+                    System.out.print("Ingrese precio unitario: ");
+                    double precio = Double.parseDouble(sc.nextLine());
+
+                    if (!(tipoP.equalsIgnoreCase("Crema") || tipoP.equalsIgnoreCase("Perfume"))) {
+                        System.out.println("Tipo de producto inválido.");
+                    } else {
+                        producto = new Producto(codP, nomP, tipoP, precio);
+                        System.out.println("Producto registrado con éxito.");
+                    }
+                    break;
+
+                case 4:
+                    if (cliente == null || vendedor == null || producto == null) {
+                        System.out.println("Debe ingresar primero Cliente, Vendedor y Producto.");
+                        break;
+                    }
+                    System.out.println("--- GENERAR PEDIDO ---");
+                    System.out.print("Ingrese cantidad solicitada: ");
+                    int cantidad = Integer.parseInt(sc.nextLine());
+                    LocalDate fechaPedido = LocalDate.now();
+
+                    pedido = new Pedido(cliente, vendedor, producto, cantidad, fechaPedido);
+
+                    double bruto = pedido.calcularTotalBruto();
+                    double descuento = pedido.calcularDescuento();
+                    double neto = pedido.calcularTotalNeto();
+
+                    System.out.println("Total bruto: $" + bruto);
+                    System.out.println("Descuento: $" + descuento);
+                    System.out.println("Total neto: $" + neto);
+
+                    if (pedido.validarPedido()) {
+                        System.out.println("Pedido CONFIRMADO.");
+                    } else {
+                        System.out.println("Pedido PENDIENTE (datos inválidos).");
+                    }
+                    break;
+
+                case 5:
+                    System.out.println("Saliendo del sistema...");
+                    break;
+
+                default:
+                    System.out.println("Opción inválida.");
+            }
+
+            System.out.println("\nPresione Enter para continuar...");
+            sc.nextLine();
+        }
+    }
+}
