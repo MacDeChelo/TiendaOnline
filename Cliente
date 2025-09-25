@@ -1,0 +1,27 @@
+package tiendaonline;
+
+import java.time.LocalDate;
+
+public class Cliente {
+    private String nombre;
+    private String rut;
+    private int edad;
+    private LocalDate fechaNacimiento;
+
+    public Cliente(String nombre, String rut, int edad, LocalDate fechaNacimiento) {
+        this.nombre = nombre;
+        this.rut = rut;
+        this.edad = edad;
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public String getNombre() { return nombre; }
+    public String getRut() { return rut; }
+    public int getEdad() { return edad; }
+    public LocalDate getFechaNacimiento() { return fechaNacimiento; }
+
+    @Override
+    public String toString() {
+        return "Cliente{" + "nombre=" + nombre + ", rut=" + rut + ", edad=" + edad + ", fechaNacimiento=" + fechaNacimiento + '}';
+    }
+}
